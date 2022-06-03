@@ -7,6 +7,10 @@ int main()
     
     printf("Qual o sexo do aluno? (m/f): ");
     scanf("%c", &sexo);
+    
+    if(sexo!='m' || 'f'){
+        printf("Digite um sexo válido.\n");
+    return 1;}
     printf("Digite a média do aluno: ");
     scanf("%f", &media);
     
@@ -15,13 +19,13 @@ int main()
             printf("O sr. aluno foi aprovado com média %.1f\n.", media);
         }else{
             printf("Reprovado.");
-    }}
+        }}
     if(sexo=='f'){
         if(media>=7){
             printf("A sra. aluna foi aprovada com média %.1f\n.", media);
         } else{
             printf("Reprovada.");
     }}
-
+    
     return 0;
 }
