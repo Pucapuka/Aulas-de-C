@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main()
+{
+    char sexo; 
+    float media;
+    
+    printf("Qual o sexo do aluno? (m/f): ");
+    scanf("%c", &sexo);
+    printf("Digite a média do aluno: ");
+    scanf("%f", &media);
+    
+    if(sexo=='m'){
+        if (media>=7){
+            printf("O sr. aluno foi aprovado com média %.1f\n.", media);
+        }else{
+            printf("Reprovado.");
+    }}
+    if(sexo=='f'){
+        if(media>=7){
+            printf("A sra. aluna foi aprovada com média %.1f\n.", media);
+        } else{
+            printf("Reprovada.");
+    }}
+
+    return 0;
+}
