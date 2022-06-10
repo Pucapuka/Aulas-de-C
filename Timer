@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <Windows.h>
+
+void numZero()
+{
+	printf("  000  \n00   00\n00   00\n00   00\n00   00\n00   00\n  000  \n\n");//0
+}
+void numUm()
+{
+	printf("            11\n         11 11\n       1    11\n            11\n            11\n            11\n            11\n\n");
+}
+void numDois()
+{
+	printf("          22\n        22   22\n             22\n           22\n          22\n         22\n        2222222\n\n");
+}
+void numTres()
+{
+   	printf("  3333  \n33   33\n     33\n  3333 \n     33\n33   33\n  3333  \n\n");//3
+}
+void numQuatro()
+{
+	printf("    44    44\n    44    44\n    44    44\n    44444444\n          44\n          44\n          44\n");
+}
+void numCinco()
+{
+	printf("    5555555\n    55\n    55\n    55555\n         55\n         55\n    55555\n\n");
+}
+void numSeis()
+{
+	printf("        66\n       66\n      66\n     66 666\n    66    66\n     66   66\n      6666\n\n");
+}
+void numSete()
+{
+	printf("7777777\n77   77\n 7   77\n     77\n     77\n     77\n     77\n\n");//7
+}
+void numOito()
+{
+	printf("8888888\n88   88\n88   88\n8888888\n88   88\n88   88\n8888888\n\n");//8
+}
+void numNove()
+{
+	printf("9999999\n99   99\n99   99\n9999999\n     99\n     99\n     99\n\n");//9
+}
+
+
+int main() {
+    
+	Sleep(2000);
+    
+    for (int i = 9; i >= 0; i--) {
+    	
+    switch (i) {
+    	case 9:
+    		numNove();
+    		break;  
+    	case 8:
+    		numOito();
+    		break;  
+    	case 7:
+    		numSete();
+    		break;  
+    	case 6:
+    		numSeis();
+    		break;  
+    	case 5:
+    		numCinco();
+    		break;  
+    	case 4:
+    		numQuatro();
+    		break;  
+    	case 3:
+    		numTres();
+    		break;  
+    	case 2:
+    		numDois();
+    		break;  
+    	case 1:
+    		numUm();
+    		break;  
+    	case 0:
+    		numZero();
+    		break;  
+	}
+      printf("\a");	
+	Sleep(1000);
+	system("cls");
+	    	
+	}
+  printf("\a");
+  printf("\a");
+  printf("\a");
+    
+    return 0;
+           
+
+          
+}
