@@ -1,0 +1,11 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int C=1;
+    while (C++<=10){
+    printf("Emmanuel Xavier\n");
+    }
+    return 0;
+}
