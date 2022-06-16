@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main()
+{
+    float A, B, S;
+    int O;
+    printf("Digite o primeiro valor: ");
+    scanf("%f", &A);
+    printf ("Digite o segundo valor: ");
+    scanf("%f", &B);
+    printf("O que você quer fazer?\n1.Soma;\n2.Subtração;\n3.Multiplicação;\n4.Divisão\n");
+    scanf("%d", &O);
+    if ((O!=1)&&(O!=2)&&(O!=3)&&(O!=4)){
+    printf("Operação inválida!");
+    }else{
+        switch (O){
+        case 1:
+        S = A + B;
+        break;
+        case 2:
+        S = A - B;
+        break;
+        case 3:
+        S = A * B;
+        break;
+        case 4:
+        S = A / B;
+        break;
+        }
+    }
+    printf("O resultado é %.2f.", S);
+    return 0;
+}
