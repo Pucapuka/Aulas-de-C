@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main()
+{
+/* Sintaxe de declaração de estrutura de dados homogêneas (vetor, array)
+*/
+
+int numeros [10];
+int i=0;
+
+while(i<10){
+    scanf("%d", &numeros[i]);
+    i++;
+}
+
+/*outra forma*/
+
+for (i=0; i<10; i++)
+    scanf("%d", &numeros[i]);
+    return 0;
+}
