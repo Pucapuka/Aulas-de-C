@@ -5,6 +5,7 @@
 #include <math.h>
 #include <locale.h>
 #include <string.h>
+#define MAX 100
 
 //contadores em variáveis globais
 
@@ -13,7 +14,7 @@ int i = 0, cdg, cont = 0;
 //Criando estrutura de dados heterogênea para os dados do paciente com o nome "cadastro"
 
 typedef struct Cliente{
-    char nome[50];
+    char nome[200];
     char CPF[11];
     int dia, mes, ano;
     char endereco[200];
@@ -23,13 +24,13 @@ typedef struct Cliente{
 //1. procedimento para coletar esses os dados do paciente com a struct
 cadastro Cadastrador(){
     cadastro cliente/*(cliente é um variável da struct cadastro para dar o retorno)*/;
-	printf("Cadastro do Paciente:\n");
+	printf("Cadastro do Paciente (Não esqueça de salvar!):\n");
 	printf("-------------------------\n");
 //      Pergunta                        Resposta
-	printf("Nome: ");                   fflush(stdin); scanf("%s", cliente.nome);
+	printf("Nome: ");                   fflush(stdin); scanf("%[^\n]s", cliente.nome);
 	printf("CPF: ");                    fflush(stdin); scanf("%s",cliente.CPF);
 	printf("Data de Nascimento:");      scanf("%d/%d/%d", &cliente.dia,&cliente.mes,&cliente.ano);
-	printf("Endereço: ");               fflush(stdin); scanf("%s",cliente.endereco);
+	printf("Endereço: ");               fflush(stdin); scanf("%[^\n]s",cliente.endereco);
 	printf("Telefone(XX)9XXXXXXXX: ");  fflush(stdin); scanf("%s",cliente.telefone);
     
     cont ++;
@@ -40,16 +41,55 @@ cadastro Cadastrador(){
 listar(cadastro cad[]){
     printf("Lista de Pacientes:\n");
         for (int j = 0; j < cont; j++){ //um array (j) para contar a lista dentro de outro array (i)
+            printf("-----------------PACIENTE %d-------------------", j+1);
             printf("\nNome-------------: %s", cad[j].nome);
             printf("\nCPF--------------: %s", cad[j].CPF);
             printf("\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
             printf("\nEndereço-----------: %s", cad[j].endereco);
             printf("\nTelefone-----------: %s", cad[j].telefone);
+            printf("-----------------------------------------------");
         }
         system ("pause >>NULL");
 }
 
+//salvando dados em arquivo
+void salvar(cadastro cad[]){
+    int j;
+    FILE *arq;
+    arq = fopen("CLIENTES.txt", "w");
+    fprintf(arq, "%d\n", 100);
+    for (j=0; j<100; j++){
+        fprintf("-----------------PACIENTE %d-------------------", j+1);
+        fprintf(arq,"\nNome-------------: %s", cad[j].nome);
+        fprintf(arq,"\nCPF--------------: %s", cad[j].CPF);
+        fprintf(arq,"\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
+        fprintf(arq,"\nEndereço-----------: %s", cad[j].endereco);
+        fprintf(arq,"\nTelefone-----------: %s", cad[j].telefone);
+        fprintf(arq,"-----------------------------------------------");
+    }
+    printf("Dados salvos com sucesso.");
+}
+/*
 //criando algoritmo de busca
+int buscaNome (cadastro ptc, char elemento){
+
+        printf("Digite o nome completo do paciente que você deseja procurar na lista:\n");
+        fflush(stdin); scanf("%[^\n]s", cad[i].nome);
+        
+        for (int i = 0; i < MAX; i++){
+            if (strcmp(elemento,cad[i]).nome==0){
+                return i; //elemento encontrado
+            }
+            return -1; //elemento não encontrado
+            }
+        }
+    break;
+    }
+}*/
+    /*
+    
+    
+}*/
 /*
 void busca(){
     // função que imprime o resultado da pesquisa na lista de strings
@@ -171,14 +211,17 @@ system("cls");
 int opcao;
 cadastro cad[100];
 
-printf ("-----------------------------------------");
-printf ("CONSULTÓRIO FARMACÊUTICO DR. PAULO LIMA");
-printf ("-----------------------------------------");
+//criando um ponteiro para a struct
+//cad *ptCad = &ptc;
+
+printf ("-----------------------------------------\n");
+printf ("CONSULTÓRIO FARMACÊUTICO DR. PAULO LIMA\n");
+printf ("-----------------------------------------\n");
 printf ("	Sua saúde é nossa prioridade\n\n");
 
-while (opcao != 7){
-    system("cls");
-    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Pesquisar Cliente\n4. Ordenar Clientes\n5. Agendar Consulta\n6. Realizar Consulta\n7. Sair\n");
+while (opcao != 8){
+    //system("cls");
+    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados \n4. Pesquisar Cliente \n5. Ordenar Clientes\n6. Agendar Consulta\n7. Realizar Consulta\n8. Sair\n");
     printf ("Escolha uma das opções:\n");
     scanf("%d", &opcao);
     system("cls");
@@ -190,16 +233,53 @@ while (opcao != 7){
         case 2:
             listar(cad);
             break;
-        /*  case 3:
-            busca();
+        
+        case 3:
+            salvar(cad);
             break;
+        /*
         case 4:
-            Ordenador();
+            int opcao_busca;
+            printf("Por qual informação você quer buscar o nome do paciente?\n 1.Nome;\n 2.CPF;\n 3.Endereço;\n 4.Data de Nascimento;\n 5.Telefone.");
+            scanf("%d", opcao_busca);
+        switch (opcao_busca){
+    
+        case 1:
+            if buscaNome(*cad[], 100, cliente.nome) != -1{
+                printf("O cliente procurado está na posição %d", i);
+            }else{
+                printf("Cliente não encontrado. Reveja o nome buscado ou cadastre o cliente.");
+            }
+        }
+         
+        case 2:
+        printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
+        fflush(stdin); scanf("%s",cliente.CPF);
+	break;
+
+    case 3:
+        printf("Digite a data de nascimento do paciente que você deseja procurar na lista:\n");      
+        scanf("%d/%d/%d", &cliente.dia,&cliente.mes,&cliente.ano);
+	break;
+    
+    case 4:
+        printf("Digite o endereço completo do paciente que você deseja procurar na lista:\n");
+        fflush(stdin); scanf("%[^\n]s",cliente.endereco);
+	break;
+
+    case 5:
+        printf("Digite o telefone do paciente que você deseja procurar na lista. Nesse modelo (XX)9XXXXXXXX:\n");
+        fflush(stdin); scanf("%s",cliente.telefone);
+    break;
+    }
             break;
         case 5:
-            agendar(); //falta essa função
+            Ordenador();
             break;
         case 6:
+            agendar(); //falta essa função
+            break;
+        case 7:
             consulta(); //falta essa função
             break;*/
 
