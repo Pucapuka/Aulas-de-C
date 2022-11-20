@@ -52,7 +52,7 @@ listar(cadastro cad[]){
         system ("pause >>NULL");
 }
 
-//salvando dados em arquivo
+//3. salvando dados em arquivo
 void salvar(cadastro cad[]){
     int j;
     FILE *arq;
@@ -69,23 +69,18 @@ void salvar(cadastro cad[]){
     }
     printf("Dados salvos com sucesso.");
 }
-/*
-//criando algoritmo de busca
-int buscaNome (cadastro ptc, char elemento){
 
-        printf("Digite o nome completo do paciente que você deseja procurar na lista:\n");
-        fflush(stdin); scanf("%[^\n]s", cad[i].nome);
-        
-        for (int i = 0; i < MAX; i++){
-            if (strcmp(elemento,cad[i]).nome==0){
-                return i; //elemento encontrado
-            }
-            return -1; //elemento não encontrado
-            }
+//4. criando algoritmo de busca
+int buscaLinearNome (struct Cliente *V, int N, char *elem){
+    int i;
+    for (i = 0; i < N; i++){
+        if (strcmp(elem, V[i].nome)==0){
+            return i; //elemento encontrado
         }
-    break;
+        return -1; //elemento nao encontrado
     }
-}*/
+}
+
     /*
     
     
@@ -208,8 +203,8 @@ int main(){
     
 setlocale(LC_ALL,"portuguese");
 system("cls");
-int opcao;
-cadastro cad[100];
+int opcao, opcao_busca;
+struct Cliente cad[100];
 
 //criando um ponteiro para a struct
 //cad *ptCad = &ptc;
@@ -237,27 +232,32 @@ while (opcao != 8){
         case 3:
             salvar(cad);
             break;
-        /*
+        
         case 4:
-            int opcao_busca;
-            printf("Por qual informação você quer buscar o nome do paciente?\n 1.Nome;\n 2.CPF;\n 3.Endereço;\n 4.Data de Nascimento;\n 5.Telefone.");
+            printf("Por qual informação você quer buscar o paciente?\n1.Nome;\n2.CPF;\n");
             scanf("%d", opcao_busca);
-        switch (opcao_busca){
-    
-        case 1:
-            if buscaNome(*cad[], 100, cliente.nome) != -1{
-                printf("O cliente procurado está na posição %d", i);
-            }else{
-                printf("Cliente não encontrado. Reveja o nome buscado ou cadastre o cliente.");
-            }
-        }
-         
-        case 2:
-        printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
-        fflush(stdin); scanf("%s",cliente.CPF);
-	break;
 
-    case 3:
+            if (opcao_busca == 1){
+                printf("Qual o cliente que você procura?\n");
+                fflush(stdin); scanf("%s", cad[i].nome);
+                if (buscaLinearNome(cad, 100, cad[i].nome) != -1){
+                printf("O cliente procurado está na posição %d", i);
+                }else{
+                printf("Cliente não encontrado. Reveja o nome buscado ou cadastre o cliente.");
+                }
+        
+            if (opcao_busca == 2){
+                printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
+                fflush(stdin); scanf("%s", cad[i].CPF);
+                if (buscaLinearNome(cad, 100, cad[i].CPF) != -1){
+                printf("O CPF procurado está na posição %d", i);
+                }else{
+                printf("Cliente não encontrado. Reveja o CPF buscado ou cadastre o cliente.");
+                }
+            } 
+        //fflush(stdin);
+    }
+    /*case 3:
         printf("Digite a data de nascimento do paciente que você deseja procurar na lista:\n");      
         scanf("%d/%d/%d", &cliente.dia,&cliente.mes,&cliente.ano);
 	break;
@@ -270,23 +270,24 @@ while (opcao != 8){
     case 5:
         printf("Digite o telefone do paciente que você deseja procurar na lista. Nesse modelo (XX)9XXXXXXXX:\n");
         fflush(stdin); scanf("%s",cliente.telefone);
-    break;
-    }
-            break;
-        case 5:
+    break;*/
+      /*
+      
+        case 4:
             Ordenador();
             break;
-        case 6:
+        case 5:
             agendar(); //falta essa função
             break;
-        case 7:
+        case 6:
             consulta(); //falta essa função
             break;*/
 
-        };
+        //};
 }
 
 printf("SAINDO DO SISTEMA!\nVá na paz!");
 
 return 0;
+}
 }
