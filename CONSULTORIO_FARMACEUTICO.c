@@ -71,7 +71,7 @@ void salvar(cadastro cad[]){
 }
 
 //4. criando algoritmo de busca
-int buscaLinearNome (struct Cliente *V, int N, char *elem){
+/*int buscaLinearNome (struct Cliente *V, int N, char *elem){
     int i;
     for (i = 0; i < N; i++){
         if (strcmp(elem, V[i].nome)==0){
@@ -80,29 +80,9 @@ int buscaLinearNome (struct Cliente *V, int N, char *elem){
         return -1; //elemento nao encontrado
     }
 }
-
-    /*
-    
-    
-}*/
-/*
-void busca(){
-    // função que imprime o resultado da pesquisa na lista de strings
-void imprimirResultadoDaBusca(resultado)
-{
-    if (resultado >= 0)
-    {
-        printf("Item encontrado no endereco:%d\n\n", resultado + 1);
-    }
-    else
-    {
-        printf("Item nao encontrado.\n");
-    }
-}
- 
+*/
 // função que faz a pesquisa na lista de strings e retorna o endereço
-int pesquisar(int tamanho, int limite, char lista[tamanho][limite], char item[limite])
-{
+int pesquisar(int tamanho, int limite, char lista[tamanho][limite], char item[limite]){
     int i, comparador;
     for (i = 0; i < tamanho; i++)
     {
@@ -118,39 +98,19 @@ int pesquisar(int tamanho, int limite, char lista[tamanho][limite], char item[li
     }
 }
 
-
-int algoritmoBusca(int tamanho, int endereco){
-    // declarando variáveis
-    tamanho = 5; 
-    limite = 100;
-    char item[tamanho][limite];
-    char itemPesquisa[limite];
- 
-    // recebendo as strings e montando a lista
-    printf("Vamos montar sua lista:\n");
-    for (int i = 0; i < tamanho; i++)
+// função que imprime o resultado da pesquisa na lista de strings
+void imprimirResultadoDaBusca(resultado){
+    if (resultado >= 0)
     {
-        printf("Digite seu item %d:", i + 1);
-        scanf("%s", &item[i]);
+        printf("Item encontrado no endereco:%d\n\n", resultado + 1);
     }
-    printf("\n");
- 
-    // mostrando a lista
-    listar(tamanho, limite, item);
- 
-    // pedindo um item para pesquisa na lista
-    printf("Digite um item para buscar na lista: ");
-    scanf("%s", &itemPesquisa);
-    printf("\n");
- 
-    // realizando a pesquisa do item
-    endereco = pesquisar(tamanho, limite, item, itemPesquisa);
- 
-    // imprimindo o resultado da busca
-    imprimirResultadoDaBusca(endereco);
+    else
+    {
+        printf("Item nao encontrado. Reveja o item pesquisado ou cadastre o cliente.\n");
+    }
 }
 
-}
+/*
 
 //função que ordena os clientes alfabeticamente
 void Ordenador(){
@@ -203,11 +163,10 @@ int main(){
     
 setlocale(LC_ALL,"portuguese");
 system("cls");
-int opcao, opcao_busca;
+int opcao, opcao_busca, tamanho = 5, limite = 100, endereco;
 struct Cliente cad[100];
-
-//criando um ponteiro para a struct
-//cad *ptCad = &ptc;
+char item[tamanho][limite];
+char itemPesquisa[limite];
 
 printf ("-----------------------------------------\n");
 printf ("CONSULTÓRIO FARMACÊUTICO DR. PAULO LIMA\n");
@@ -216,7 +175,7 @@ printf ("	Sua saúde é nossa prioridade\n\n");
 
 while (opcao != 8){
     //system("cls");
-    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados \n4. Pesquisar Cliente \n5. Ordenar Clientes\n6. Agendar Consulta\n7. Realizar Consulta\n8. Sair\n");
+    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados \n4. Pesquisar Cliente por Nome \n5. Pesquisar Cliente por CPF\n7. Agendar Consulta\n8. Sair\n");
     printf ("Escolha uma das opções:\n");
     scanf("%d", &opcao);
     system("cls");
@@ -234,45 +193,34 @@ while (opcao != 8){
             break;
         
         case 4:
-            printf("Por qual informação você quer buscar o paciente?\n1.Nome;\n2.CPF;\n");
+         /*   printf("Por qual informação você quer buscar o paciente?\n1.Nome \t\t2.CPF \n");
             scanf("%d", opcao_busca);
 
-            if (opcao_busca == 1){
-                printf("Qual o cliente que você procura?\n");
-                fflush(stdin); scanf("%s", cad[i].nome);
-                if (buscaLinearNome(cad, 100, cad[i].nome) != -1){
-                printf("O cliente procurado está na posição %d", i);
-                }else{
-                printf("Cliente não encontrado. Reveja o nome buscado ou cadastre o cliente.");
-                }
+            switch (opcao_busca){
+                case 1:*/
+            // pedindo um item para pesquisa na lista
+            printf("Qual o cliente que você procura?\n");
+            fflush(stdin); scanf("%[^\n]s", &itemPesquisa);
+            // realizando a pesquisa do item
+            endereco = pesquisar(tamanho, limite, cad[i].nome, itemPesquisa);
+            // imprimindo o resultado da busca
+            imprimirResultadoDaBusca(endereco);
+            break;
+            
+        case 5:
+            // pedindo um item para pesquisa na lista
+            printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
+            fflush(stdin); scanf("%[^\n]s", &itemPesquisa);
+            // realizando a pesquisa do item
+            endereco = pesquisar(tamanho, limite, cad[i].CPF, itemPesquisa);
+            // imprimindo o resultado da busca
+            imprimirResultadoDaBusca(endereco);
+            break;
+            }
         
-            if (opcao_busca == 2){
-                printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
-                fflush(stdin); scanf("%s", cad[i].CPF);
-                if (buscaLinearNome(cad, 100, cad[i].CPF) != -1){
-                printf("O CPF procurado está na posição %d", i);
-                }else{
-                printf("Cliente não encontrado. Reveja o CPF buscado ou cadastre o cliente.");
-                }
-            } 
+            
         //fflush(stdin);
-    }
-    /*case 3:
-        printf("Digite a data de nascimento do paciente que você deseja procurar na lista:\n");      
-        scanf("%d/%d/%d", &cliente.dia,&cliente.mes,&cliente.ano);
-	break;
-    
-    case 4:
-        printf("Digite o endereço completo do paciente que você deseja procurar na lista:\n");
-        fflush(stdin); scanf("%[^\n]s",cliente.endereco);
-	break;
-
-    case 5:
-        printf("Digite o telefone do paciente que você deseja procurar na lista. Nesse modelo (XX)9XXXXXXXX:\n");
-        fflush(stdin); scanf("%s",cliente.telefone);
-    break;*/
       /*
-      
         case 4:
             Ordenador();
             break;
@@ -284,10 +232,10 @@ while (opcao != 8){
             break;*/
 
         //};
+    
 }
-
 printf("SAINDO DO SISTEMA!\nVá na paz!");
 
 return 0;
-}
+
 }
