@@ -5,7 +5,9 @@
 #include <math.h>
 #include <locale.h>
 #include <string.h>
-#define MAX 100
+#include <stdbool.h>
+#define limite 100
+#define tamanho 100
 
 //contadores em variáveis globais
 
@@ -38,7 +40,7 @@ cadastro Cadastrador(){
 }
 
 //2. função que lista as strings informadas
-listar(cadastro cad[]){
+void listar(cadastro cad[]){
     printf("Lista de Pacientes:\n");
         for (int j = 0; j < cont; j++){ //um array (j) para contar a lista dentro de outro array (i)
             printf("-----------------PACIENTE %d-------------------", j+1);
@@ -47,7 +49,7 @@ listar(cadastro cad[]){
             printf("\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
             printf("\nEndereço-----------: %s", cad[j].endereco);
             printf("\nTelefone-----------: %s", cad[j].telefone);
-            printf("-----------------------------------------------");
+            printf("\n-----------------------------------------------");
         }
         system ("pause >>NULL");
 }
@@ -59,7 +61,7 @@ void salvar(cadastro cad[]){
     arq = fopen("CLIENTES.txt", "w");
     fprintf(arq, "%d\n", 100);
     for (j=0; j<100; j++){
-        fprintf("-----------------PACIENTE %d-------------------", j+1);
+        fprintf(arq,"-----------------PACIENTE %d-------------------", j+1);
         fprintf(arq,"\nNome-------------: %s", cad[j].nome);
         fprintf(arq,"\nCPF--------------: %s", cad[j].CPF);
         fprintf(arq,"\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
@@ -71,35 +73,27 @@ void salvar(cadastro cad[]){
 }
 
 //4. criando algoritmo de busca
-/*int buscaLinearNome (struct Cliente *V, int N, char *elem){
-    int i;
-    for (i = 0; i < N; i++){
-        if (strcmp(elem, V[i].nome)==0){
-            return i; //elemento encontrado
-        }
-        return -1; //elemento nao encontrado
-    }
-}
-*/
 // função que faz a pesquisa na lista de strings e retorna o endereço
-int pesquisar(int tamanho, int limite, char lista[tamanho][limite], char item[limite]){
-    int i, comparador;
-    for (i = 0; i < tamanho; i++)
-    {
-        comparador = strcmp(item, lista[i]);
-        if (comparador == 0)
-        {
-            return i;
-        }
+int pesquisar(struct Cliente lista[100], char item[100], bool escolha){
+   int foiEncontrado = -1;
+   
+   for (int i = 0; i < tamanho; i++){
+    if (escolha){
+        foiEncontrado = strcmp(lista[i].nome, item);
+        if (foiEncontrado == 0)
+        return i;
+    }else{
+        foiEncontrado = strcmp(lista[i].CPF, item);
+        if (foiEncontrado == 0)
+        return i;
+        
     }
-    if (comparador != 0)
-    {
-        return -1;
-    }
+   }
+   return -1;
 }
 
 // função que imprime o resultado da pesquisa na lista de strings
-void imprimirResultadoDaBusca(resultado){
+void imprimirResultadoDaBusca(int resultado){
     if (resultado >= 0)
     {
         printf("Item encontrado no endereco:%d\n\n", resultado + 1);
@@ -163,7 +157,7 @@ int main(){
     
 setlocale(LC_ALL,"portuguese");
 system("cls");
-int opcao, opcao_busca, tamanho = 5, limite = 100, endereco;
+int opcao, opcao_busca, endereco;
 struct Cliente cad[100];
 char item[tamanho][limite];
 char itemPesquisa[limite];
@@ -202,7 +196,7 @@ while (opcao != 8){
             printf("Qual o cliente que você procura?\n");
             fflush(stdin); scanf("%[^\n]s", &itemPesquisa);
             // realizando a pesquisa do item
-            endereco = pesquisar(tamanho, limite, cad[i].nome, itemPesquisa);
+            endereco = pesquisar (cad, itemPesquisa, true);
             // imprimindo o resultado da busca
             imprimirResultadoDaBusca(endereco);
             break;
@@ -212,7 +206,7 @@ while (opcao != 8){
             printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
             fflush(stdin); scanf("%[^\n]s", &itemPesquisa);
             // realizando a pesquisa do item
-            endereco = pesquisar(tamanho, limite, cad[i].CPF, itemPesquisa);
+           endereco = pesquisar (cad, itemPesquisa, false);
             // imprimindo o resultado da busca
             imprimirResultadoDaBusca(endereco);
             break;
