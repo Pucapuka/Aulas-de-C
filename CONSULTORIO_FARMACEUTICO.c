@@ -49,7 +49,7 @@ void listar(cadastro cad[]){
             printf("\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
             printf("\nEndereço-----------: %s", cad[j].endereco);
             printf("\nTelefone-----------: %s", cad[j].telefone);
-            printf("\n-----------------------------------------------");
+            printf("\n-----------------------------------------------\n");
         }
         system ("pause >>NULL");
 }
@@ -60,16 +60,54 @@ void salvar(cadastro cad[]){
     FILE *arq;
     arq = fopen("CLIENTES.txt", "w");
     fprintf(arq, "%d\n", 100);
-    for (j=0; j<100; j++){
+    for (j=0; j<10; j++){
         fprintf(arq,"-----------------PACIENTE %d-------------------", j+1);
         fprintf(arq,"\nNome-------------: %s", cad[j].nome);
         fprintf(arq,"\nCPF--------------: %s", cad[j].CPF);
         fprintf(arq,"\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
         fprintf(arq,"\nEndereço-----------: %s", cad[j].endereco);
         fprintf(arq,"\nTelefone-----------: %s", cad[j].telefone);
-        fprintf(arq,"-----------------------------------------------");
+        fprintf(arq,"\n-----------------------------------------------\n");
     }
+    
+    fclose (arq);
+    
     printf("Dados salvos com sucesso.");
+}
+
+//Abrir arquivo para ler
+void abrir(cadastro cad[]){
+    //int j;
+    FILE *arq;
+    arq = fopen("CLIENTES.txt", "r");
+    //fscanf(arq, "%d\n", 100);
+    if (arq == NULL){
+        printf("Arquivo não encontrado");
+        system("pause");
+        //return 0;
+    }
+    for (int j=0; j<10; j++){
+        fscanf(arq,"-----------------PACIENTE %d-------------------", j+1);
+        fscanf(arq,"\nNome-------------: %s", cad[j].nome);
+        fscanf(arq,"\nCPF--------------: %s", cad[j].CPF);
+        fscanf(arq,"\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
+        fscanf(arq,"\nEndereço-----------: %s", cad[j].endereco);
+        fscanf(arq,"\nTelefone-----------: %s", cad[j].telefone);
+        fscanf(arq,"\n-----------------------------------------------\n");    
+    
+    }
+
+    for (int j=0; j<10; j++){
+        printf(arq,"-----------------PACIENTE %d-------------------", j+1);
+        printf(arq,"\nNome-------------: %s", cad[j].nome);
+        printf(arq,"\nCPF--------------: %s", cad[j].CPF);
+        printf(arq,"\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
+        printf(arq,"\nEndereço-----------: %s", cad[j].endereco);
+        printf(arq,"\nTelefone-----------: %s", cad[j].telefone);
+        printf(arq,"\n-----------------------------------------------\n");
+    }
+    fclose (arq);
+    printf("Arquivo aberto com sucesso.\n");
 }
 
 //4. criando algoritmo de busca
@@ -169,7 +207,7 @@ printf ("	Sua saúde é nossa prioridade\n\n");
 
 while (opcao != 8){
     //system("cls");
-    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados \n4. Pesquisar Cliente por Nome \n5. Pesquisar Cliente por CPF\n7. Agendar Consulta\n8. Sair\n");
+    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados\n4. Abrir dados salvos \n5. Pesquisar Cliente por Nome \n6. Pesquisar Cliente por CPF\n7. Agendar Consulta\n8. Sair\n");
     printf ("Escolha uma das opções:\n");
     scanf("%d", &opcao);
     system("cls");
@@ -187,11 +225,11 @@ while (opcao != 8){
             break;
         
         case 4:
-         /*   printf("Por qual informação você quer buscar o paciente?\n1.Nome \t\t2.CPF \n");
-            scanf("%d", opcao_busca);
+            abrir(cad);
+            break;
 
-            switch (opcao_busca){
-                case 1:*/
+        case 5:
+         
             // pedindo um item para pesquisa na lista
             printf("Qual o cliente que você procura?\n");
             fflush(stdin); scanf("%[^\n]s", &itemPesquisa);
@@ -201,7 +239,7 @@ while (opcao != 8){
             imprimirResultadoDaBusca(endereco);
             break;
             
-        case 5:
+        case 6:
             // pedindo um item para pesquisa na lista
             printf("Digite o CPF do paciente que você deseja procurar na lista:\n");
             fflush(stdin); scanf("%[^\n]s", &itemPesquisa);
