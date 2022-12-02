@@ -30,10 +30,10 @@ cadastro Cadastrador(){
 	printf("-------------------------\n");
 //      Pergunta                        Resposta
 	printf("Nome: ");                   fflush(stdin); scanf("%[^\n]s", cliente.nome);
-	printf("CPF: ");                    fflush(stdin); scanf("%s",cliente.CPF);
+	printf("CPF: ");                    /*fflush(stdin);*/ scanf("%s",cliente.CPF);
 	printf("Data de Nascimento:");      scanf("%d/%d/%d", &cliente.dia,&cliente.mes,&cliente.ano);
 	printf("Endereço: ");               fflush(stdin); scanf("%[^\n]s",cliente.endereco);
-	printf("Telefone(XX)9XXXXXXXX: ");  fflush(stdin); scanf("%s",cliente.telefone);
+	printf("Telefone(XX)9XXXXXXXX: ");  /*fflush(stdin);*/ scanf("%s",cliente.telefone);
     
     cont ++;
     return cliente;
@@ -142,60 +142,150 @@ void imprimirResultadoDaBusca(int resultado){
     }
 }
 
-/*
-
-//função que ordena os clientes alfabeticamente
-void Ordenador(){
-    char nome[10][80];
- 
-void emOrdem(){
+//Algoritmo de ordenação
+void emOrdem(cadastro cad[], int N){
     int i, j, r;
-    char aux [80];
-    for (i = 0; i <= 10 -1; i++){
-        for (j = i + 1; j <= 10; j++){
-            r = strcmp (nome[i], nome[j]);
+    struct Cliente aux [100];
+    for (i = 0; i <= N -1; i++){
+        for (j = i + 1; j <= 100; j++){
+            r = strcmp (cad[i].nome, cad[j].nome);
             if (r > 0){
-                strcpy (aux, nome[i]);
-                strcpy (nome[i], nome[j]);
-                strcpy (nome[j], aux);
+                strcpy (aux, cad[i].nome);
+                strcpy (cad[i].nome, cad[j].nome);
+                strcpy (cad[j].nome, aux);
             }
         }
     }
-}
- 
-void nameColection (){
-    int i;
-    printf("Digite 10 nomes:\n");
-    for(i = 0; i < 10 ; i ++){
-        gets(nome[i]);
-    }
-}
- 
- 
-void showNames(){
-    int i;
     printf("\nNomes ordenados:\n");
-    for(i = 0; i < 10; i ++){
-    puts(nome[i]);
+    for(i = 0; i < N-1; i ++){
+    printf("\nNome-------------: %s\n", cad[i].nome);
     }
+
 }
- //para chamar no int main  
-    nameColection();
-   
-    emOrdem();
+
+//Abertura de consulta
+/*//seleção do paciente
+int paciente(cadastro cad[], int N){
+printf("Em qual cliente será o atendimento?\n");
+for (int i = 0; i < N; i++){
+    printf("%d. %s\n", i+1, cad[i].nome);
+}
+    scanf("%d", i);
+    return i;
+}*/
+
+void agendarConsulta(cadastro cad[], int N){
+    int agenda;
+    for (int i = 0; i < N; i++){
+    printf("%d. %s\n", i+1, cad[i].nome);
+    }
+    printf("Em qual cliente será o atendimento?\n");
+    fflush(stdin);
+    scanf("Opção: %d", &i);
+    i = i-1;
+    fflush(stdin);
+    printf("Qual o tipo de serviço deseja fazer?\n1. Verificação de pressão arterial;\n2. Glicemia.");
+    scanf("%d", &agenda);
+    if (agenda==1){
+        printf("Paciente %s agendado para uma verificação de pressão arterial.\n", cad[i].nome);
+        }else if(agenda==2){
+        printf("Paciente %s agendado para um teste de glicemia.\n", cad[i].nome);
+        }
+        else{
+            printf("Opção inválida. tente novamente");
+            return -1;
+        }
+    }
+
+
+void salvarConsulta(cadastro cad[], int N){
+    char dormiu, fumou, bebeu, tomouMedicamento, medicamento, pressure;
+    int j;
+    pressao(cad, tamanho, j);
+    FILE *arq;
+    arq = fopen("CONSULTA.txt","w");
+    fprintf(arq,"--------------------PRESSÃO ARTERIAL----------------------");
+    fprintf(arq,"\nNome-------------: %s", cad[j].nome);
+    fprintf(arq,"\nCPF--------------: %s", cad[j].CPF);
+    fprintf(arq,"\nData de Nascimento-: %d/%d/%d", cad[j].dia, cad[j].mes, cad[j].ano);
+    fprintf(arq,"\nEndereço-----------: %s", cad[j].endereco);
+    fprintf(arq,"\nTelefone-----------: %s", cad[j].telefone);
+    fprintf(arq,"\nDormiu bem?: %c", &dormiu);
+    fprintf(arq,"\nFumou nos últimos 30min?: %c", &fumou);
+    fprintf(arq,"\nIngeriu bebida alcoólica ou outro tipo nos últimos 30min?: %c", &bebeu);
+    fprintf(arq,"\nTomou medicamento?: %c. Medicamento: %s", &tomouMedicamento, medicamento);
+    fprintf(arq,"\nPressão Arterial: %s", pressure);
+    fprintf(arq,"\n-----------------------------------------------\n");
+    
+    fclose (arq);
+    
+    printf("Dados da consulta salvos com sucesso.");
+}
+//procedimento de pressão arterial
+void pressao(cadastro cad[], int N, int i){
+    char dormiu, fumou, bebeu, tomouMedicamento, medicamento, pressure;
+    //dados do paciente
+    for (int i = 0; i < N; i++){
+    printf("%d. %s\n", i+1, cad[i].nome);
+    }
+    printf("Em qual cliente será o atendimento?\n");
+    fflush(stdin);
+    scanf("Opção: %d", &i);
+    i = i-1;
+    fflush(stdin);
+    printf("Paciente: %s\n", cad[i].nome);
+    printf("CPF: %s\n", cad[i].CPF);
+    printf("Endereço: %s\n", cad[i].endereco);
+
+    //questionário do paciente
+    printf("Dormiu bem? S/N: ");
+    scanf("%c", &dormiu);
+    if ((dormiu == "S") || (dormiu =="N")){
+        printf("%c", dormiu);
+    }else{
+        printf("digite uma resposta válida");
+    }
+
+    printf("Fumou nos últimos 30min? S/N: ");
+    scanf("%c", &fumou);
+    if ((fumou == "S") || (fumou =="N")){
+        printf("%c", fumou);
+    }else{
+        printf("digite uma resposta válida");
+    }
+
+        printf("Tomou bebida alcoólica ou outra bebida estimulante nos últimos 30min? S/N: ");
+        scanf("%c", &bebeu);
+    
+    if ((bebeu == "S") || (bebeu =="N")){
+        printf("%c", bebeu);
+    }else{
+        printf("digite uma resposta válida");
+    }
+    
+    printf("Tomou algum medicamento hoje? S/N:");
+    scanf("%c", &tomouMedicamento);
+    if (tomouMedicamento == "S"){
+        printf("S. Qual?");
+        scanf("%s", medicamento);
+    }else if(tomouMedicamento =="N"){
+        printf("N.");
+    }else
+        printf("digite uma resposta válida");
+    
+    // verificação da pressão:
+
+    printf("Digite o valor da pressão arterial: ex.: 120x80");
+    scanf("%s", pressao);
+    }
+
+
  
-    showNames();
-   
- 
-    return 0;
-}
-}
-*/
 int main(){
     
 setlocale(LC_ALL,"portuguese");
-system("cls");
-int opcao, opcao_busca, endereco;
+//system("cls");
+int opcao, opcao_busca, endereco, *client;
 struct Cliente cad[100];
 char item[tamanho][limite];
 char itemPesquisa[limite];
@@ -205,9 +295,9 @@ printf ("CONSULTÓRIO FARMACÊUTICO DR. PAULO LIMA\n");
 printf ("-----------------------------------------\n");
 printf ("	Sua saúde é nossa prioridade\n\n");
 
-while (opcao != 8){
+while (opcao != 10){
     //system("cls");
-    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados\n4. Abrir dados salvos \n5. Pesquisar Cliente por Nome \n6. Pesquisar Cliente por CPF\n7. Agendar Consulta\n8. Sair\n");
+    printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados\n4. Abrir dados salvos \n5. Pesquisar Cliente por Nome \n6. Pesquisar Cliente por CPF\n7. Lista dos clientes em ordem alfabética\n8. Agendar\n9. Consulta\n10. Sair\n");
     printf ("Escolha uma das opções:\n");
     scanf("%d", &opcao);
     system("cls");
@@ -248,22 +338,19 @@ while (opcao != 8){
             // imprimindo o resultado da busca
             imprimirResultadoDaBusca(endereco);
             break;
-            }
-        
             
         //fflush(stdin);
-      /*
-        case 4:
-            Ordenador();
-            break;
-        case 5:
-            agendar(); //falta essa função
-            break;
-        case 6:
-            consulta(); //falta essa função
-            break;*/
+        case 7:
+            emOrdem(cad, tamanho);
 
-        //};
+        case 8:
+            agendarConsulta(cad, tamanho);
+            break;
+        case 9:
+            salvarConsulta(cad, tamanho);
+            break;
+
+        };
     
 }
 printf("SAINDO DO SISTEMA!\nVá na paz!");
