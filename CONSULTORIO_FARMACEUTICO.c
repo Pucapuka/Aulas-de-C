@@ -163,17 +163,9 @@ void emOrdem(cadastro cad[limite], int N){
 
 }
 
-//funções para imprimir pressao ou glicemia
-char imprimePressao(){
-    return printf("Pressao Arterial");
-}
-
-char imprimeGlicemia(){
-    return printf("Glicemia");
-}
 
 //8.Agendamento de consulta
-void agendarConsulta(cadastro cad[], int N, char servico[16], char data[10], char hora[5] ){
+void agendarConsulta(cadastro cad[], int N, char servico[], char data[], char hora[] ){
     int agenda;
     for (int i = 0; i < N; i++){
     printf("%d. %s\n", i+1, cad[i].nome);
@@ -187,9 +179,9 @@ void agendarConsulta(cadastro cad[], int N, char servico[16], char data[10], cha
     scanf("%d", &agenda);
     while ((agenda<1)&&(agenda>2)){
     if (agenda==1){
-        servico[16] = imprimePressao(); 
+        servico = "Pressao"; 
         }else if(agenda==2){
-        servico[16] = imprimeGlicemia();
+        servico = "Glicemia";
         }
         else{
             printf("Opcao invalida. tente novamente");
@@ -199,13 +191,13 @@ void agendarConsulta(cadastro cad[], int N, char servico[16], char data[10], cha
     scanf("%s", data);
     printf("Que horas?\n");
     scanf("%s", hora);
-    printf("Paciente %s agendado para uma verificacao de %s.\n", cad[i].nome, servico[16]);
+    printf("Paciente %s agendado para uma verificacao de %s.\n", cad[i].nome, servico);
     
-    //agendamento(cad, i, servico, data, hora);
+    agendamento(cad, i, servico, data, hora);
 }
 
 //procedimento para salvar o agendamento da consulta em arquivo
-void agendamento(cadastro cad[], int N, char s, char d, char h){
+void agendamento(cadastro cad[], int N, char s[], char d[], char h[]){
     FILE *arq;
     arq = fopen("AGENDA.txt", "w");
     fprintf(arq, "\nAGENDAMENTO DE PACIENTES: \n");
