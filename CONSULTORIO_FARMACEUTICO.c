@@ -30,10 +30,10 @@ cadastro Cadastrador(){
 	printf("-------------------------\n");
 //      Pergunta                        Resposta
 	printf("Nome: ");                   fflush(stdin); scanf("%[^\n]s", cliente.nome);
-	printf("CPF: ");                    /*fflush(stdin);*/ scanf("%s",cliente.CPF);
+	printf("CPF: ");                    scanf("%s",cliente.CPF);
 	printf("Data de Nascimento:");      scanf("%d/%d/%d", &cliente.dia,&cliente.mes,&cliente.ano);
 	printf("Endereco: ");               fflush(stdin); scanf("%[^\n]s",cliente.endereco);
-	printf("Telefone(XX)9XXXXXXXX: ");  /*fflush(stdin);*/ scanf("%s",cliente.telefone);
+	printf("Telefone(XX)9XXXXXXXX: ");  scanf("%s",cliente.telefone);
     
     cont ++;
     return cliente;
@@ -77,14 +77,11 @@ void salvar(cadastro cad[limite]){
 
 //Abrir arquivo para ler
 void abrir(cadastro cad[limite]){
-    //int j;
     FILE *arq;
     arq = fopen("CLIENTES.txt", "r");
-    //fscanf(arq, "%d\n", 100);
     if (arq == NULL){
         printf("Arquivo nao encontrado");
         system("pause");
-        //return 0;
     }
     for (int j=0; j<limite; j++){
         fscanf(arq,"-----------------PACIENTE %d-------------------", j+1);
@@ -341,7 +338,6 @@ void consultaGlicemia(cadastro cad[limite], int N){
 int main(){
     
 setlocale(LC_ALL,"portuguese");
-//system("cls");
 int opcao, opcao_busca, opcao_consulta, endereco, *client;
 struct Cliente cad[100];
 char item[tamanho][limite];
@@ -353,7 +349,6 @@ printf ("-----------------------------------------\n");
 printf ("	Sua saude e nossa prioridade\n\n");
 
 while (opcao != 10){
-    //system("cls");
     printf ("1. Cadastrar Cliente\n2. Listar Clientes\n3. Salvar dados\n4. Abrir dados salvos \n5. Pesquisar Cliente por Nome \n6. Pesquisar Cliente por CPF\n7. Lista dos clientes em ordem alfabetica\n8. Agendar\n9. Consulta\n10. Sair\n");
     printf ("Escolha uma das opcoes:\n");
     scanf("%d", &opcao);
@@ -396,7 +391,6 @@ while (opcao != 10){
             imprimirResultadoDaBusca(endereco);
             break;
             
-        //fflush(stdin);
         case 7:
             emOrdem(cad, tamanho);
             break;
